@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
-        LazyColumn{
+        LazyColumn {
             items(puppies.size) { index ->
                 val puppy = puppies[index]
                 Row(
@@ -64,14 +64,15 @@ fun MyApp() {
                         painter = painterResource(id = puppy.imageResId),
                         contentDescription = "",
                         modifier = Modifier
-                            .height(90.dp)
                             .width(120.dp)
+                            .aspectRatio(4 / 3f)
                             .clip(RoundedCornerShape(4.dp)),
                         contentScale = ContentScale.Crop
                     )
-                    Column(modifier = Modifier
-                        .padding(start = 16.dp)
-                        .fillMaxWidth()
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .fillMaxWidth()
                     ) {
                         Text(text = puppy.name, style = typography.h6)
                         Text(text = puppy.breed, style = typography.body1)
@@ -128,7 +129,52 @@ private val puppies = listOf(
         breed = "Affenpinscher",
         distance = "50 miles",
         favourite = false,
-        sex = "Female",
+        sex = "Male",
         imageResId = R.drawable.affenpinscher_1yrs
+    ),
+    Puppy(
+        "Lola",
+        age = "1 month",
+        breed = "Husky",
+        distance = "50 miles",
+        favourite = false,
+        sex = "Female",
+        imageResId = R.drawable.husky_puppy_1_mo
+    ),
+    Puppy(
+        "Sophie",
+        age = "6 months",
+        breed = "Labrador",
+        distance = "50 miles",
+        favourite = false,
+        sex = "Female",
+        imageResId = R.drawable.labrador_puppy
+    ),
+    Puppy(
+        "Maggie",
+        age = "4 months",
+        breed = "pomeranian",
+        distance = "50 miles",
+        favourite = false,
+        sex = "Female",
+        imageResId = R.drawable.puppy_pomeranian
+    ),
+    Puppy(
+        "Toby",
+        age = "5 months",
+        breed = "German Shepherd",
+        distance = "1 miles",
+        favourite = false,
+        sex = "Male",
+        imageResId = R.drawable.german_shepherd_puppy
+    ),
+    Puppy(
+        "Buddy",
+        age = "2 months",
+        breed = "Golden Retriever",
+        distance = "2 miles",
+        favourite = false,
+        sex = "Male",
+        imageResId = R.drawable.golden_retriever
     )
 )
