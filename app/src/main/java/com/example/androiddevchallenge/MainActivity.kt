@@ -20,6 +20,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -50,33 +51,35 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
-        List(puppies.size) { index ->
-            val puppy = puppies[index]
-            Row(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = puppy.imageResId),
-                    contentDescription = "",
+        LazyColumn{
+            items(puppies.size) { index ->
+                val puppy = puppies[index]
+                Row(
                     modifier = Modifier
-                        .height(90.dp)
-                        .width(120.dp)
-                        .clip(RoundedCornerShape(4.dp)),
-                    contentScale = ContentScale.Crop
-                )
-                Column(modifier = Modifier
-                    .padding(start = 16.dp)
-                    .fillMaxWidth()
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = puppy.name, style = typography.h6)
-                    Text(text = puppy.breed, style = typography.body1)
-                    Text(
-                        text = puppy.sex + " . " + puppy.age + " . " + puppy.distance,
-                        style = typography.caption
+                    Image(
+                        painter = painterResource(id = puppy.imageResId),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .height(90.dp)
+                            .width(120.dp)
+                            .clip(RoundedCornerShape(4.dp)),
+                        contentScale = ContentScale.Crop
                     )
+                    Column(modifier = Modifier
+                        .padding(start = 16.dp)
+                        .fillMaxWidth()
+                    ) {
+                        Text(text = puppy.name, style = typography.h6)
+                        Text(text = puppy.breed, style = typography.body1)
+                        Text(
+                            text = puppy.sex + " . " + puppy.age + " . " + puppy.distance,
+                            style = typography.caption
+                        )
+                    }
                 }
             }
         }
@@ -118,5 +121,14 @@ private val puppies = listOf(
         favourite = false,
         sex = "Male",
         imageResId = R.drawable.pitbull_baby
+    ),
+    Puppy(
+        "Chalie",
+        age = "1 year",
+        breed = "Affenpinscher",
+        distance = "50 miles",
+        favourite = false,
+        sex = "Female",
+        imageResId = R.drawable.affenpinscher_1yrs
     )
 )
