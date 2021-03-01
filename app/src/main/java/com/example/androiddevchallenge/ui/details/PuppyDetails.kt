@@ -36,10 +36,10 @@ fun PuppyDetails(id: String) {
                         .clip(RoundedCornerShape(4.dp)),
                     contentScale = ContentScale.Crop
                 )
-                Text(text = "Name ${puppy.name}", style = typography.h6)
-                Text(text = "Breed ${puppy.breed}", style = typography.body1)
-                Text(text = "Sex ${puppy.sex}", style = typography.caption)
-                Text(text = "Distance ${puppy.distance}", style = typography.caption)
+                Text(text = puppy.name, style = typography.h6)
+                Text(text = "Breed: ${puppy.breed}", style = typography.body1)
+                Text(text = "Sex: ${puppy.sex}", style = typography.caption)
+                Text(text = "Distance: ${puppy.distance}", style = typography.caption)
             }
         }
     }

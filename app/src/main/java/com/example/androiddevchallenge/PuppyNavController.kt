@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.example.androiddevchallenge.MainDestinations.PUPPIES
@@ -44,6 +45,13 @@ fun NavGraph(startDestination: String = PUPPIES) {
  */
 class MainActions(navController: NavHostController) {
     val puppyClicked: (String) -> Unit = { id ->
-        navController.navigate("$PUPPY_DETAILS/$id")
+        navController.navigate("$PUPPY_DETAILS/$id") {
+            this.anim {
+                enter = R.anim.nav_default_enter_anim
+                exit = R.anim.nav_default_exit_anim
+                popEnter = R.anim.nav_default_pop_enter_anim
+                popExit = R.anim.nav_default_pop_exit_anim
+            }
+        }
     }
 }
