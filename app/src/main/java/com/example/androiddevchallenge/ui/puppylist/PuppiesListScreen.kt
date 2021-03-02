@@ -1,26 +1,56 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.ui.puppylist
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.androiddevchallenge.ui.theme.typography
-import java.util.*
 import com.example.androiddevchallenge.R
+import com.example.androiddevchallenge.ui.theme.typography
 
 @Composable
-fun PuppiesListScreen(puppyClicked: (String) -> Unit) {
+fun PuppiesListScreen(
+    puppyClicked: (String) -> Unit
+) {
+    var puppies by remember { mutableStateOf(puppiesData) }
+
     Surface(color = MaterialTheme.colors.background) {
         LazyColumn {
             items(puppies.size) { index ->
@@ -34,17 +64,20 @@ fun PuppiesListScreen(puppyClicked: (String) -> Unit) {
                         },
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+
                     Image(
                         painter = painterResource(id = puppy.imageResId),
                         contentDescription = "",
                         modifier = Modifier
                             .width(120.dp)
                             .aspectRatio(4 / 3f)
+                            .weight(2f, false)
                             .clip(RoundedCornerShape(4.dp)),
                         contentScale = ContentScale.Crop
                     )
                     Column(
                         modifier = Modifier
+                            .weight(4f, true)
                             .padding(start = 16.dp)
                             .fillMaxWidth()
                     ) {
@@ -55,85 +88,29 @@ fun PuppiesListScreen(puppyClicked: (String) -> Unit) {
                             style = typography.caption
                         )
                     }
+                    Image(
+                        painter = painterResource(id = getFavoriteImage(puppy.favourite)),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .weight(1f, false)
+                            .padding(16.dp)
+                            .wrapContentWidth()
+                            .wrapContentHeight()
+                            .clickable {
+                                togglePuppyFavoriteState(puppy)
+                                puppies = puppiesData
+                            }
+                    )
                 }
             }
         }
     }
 }
 
-data class Puppy(
-    val name: String,
-    val age: String,
-    val breed: String,
-    val imageResId: Int,
-    val distance: String,
-    val favourite: Boolean,
-    val sex: String,
-    val id: String = UUID.randomUUID().toString(),
-)
-
-val puppies = listOf(
-    Puppy(
-        "LULU",
-        age = "4 months",
-        breed = "Pit Bull",
-        distance = "2 miles",
-        favourite = false,
-        sex = "Male",
-        imageResId = R.drawable.pitbull_baby
-    ),
-    Puppy(
-        "Chalie",
-        age = "1 year",
-        breed = "Affenpinscher",
-        distance = "50 miles",
-        favourite = false,
-        sex = "Male",
-        imageResId = R.drawable.affenpinscher_1yrs
-    ),
-    Puppy(
-        "Lola",
-        age = "1 month",
-        breed = "Husky",
-        distance = "50 miles",
-        favourite = false,
-        sex = "Female",
-        imageResId = R.drawable.husky_puppy_1_mo
-    ),
-    Puppy(
-        "Sophie",
-        age = "6 months",
-        breed = "Labrador",
-        distance = "50 miles",
-        favourite = false,
-        sex = "Female",
-        imageResId = R.drawable.labrador_puppy
-    ),
-    Puppy(
-        "Maggie",
-        age = "4 months",
-        breed = "pomeranian",
-        distance = "50 miles",
-        favourite = false,
-        sex = "Female",
-        imageResId = R.drawable.puppy_pomeranian
-    ),
-    Puppy(
-        "Toby",
-        age = "5 months",
-        breed = "German Shepherd",
-        distance = "1 miles",
-        favourite = false,
-        sex = "Male",
-        imageResId = R.drawable.german_shepherd_puppy
-    ),
-    Puppy(
-        "Buddy",
-        age = "2 months",
-        breed = "Golden Retriever",
-        distance = "2 miles",
-        favourite = false,
-        sex = "Male",
-        imageResId = R.drawable.golden_retriever
-    )
-)
+@DrawableRes
+private fun getFavoriteImage(favorite: Boolean): Int {
+    return when {
+        favorite -> R.drawable.ic_favorite_24
+        else -> R.drawable.ic_not_favorite_black_24
+    }
+}
