@@ -1,15 +1,14 @@
-# Put title of your app here
+# ComPupp
 
 ![Workflow result](https://github.com/harsha973/compose-dev-challenge-1/workflows/Check/badge.svg)
 
 
 ## :scroll: Description
-<!--- Describe your app in one or two sentences -->
+First compose challenge to explore framework, state and navigation.
 
 
 ## :bulb: Motivation and Context
-<!--- Optionally point readers to interesting parts of your submission. -->
-<!--- What are you especially proud of? -->
+I have been following compose from a while and when I saw dev challenge, I jumped on to it.
 
 
 ## :camera_flash: Screenshots
